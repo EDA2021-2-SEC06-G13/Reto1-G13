@@ -46,6 +46,11 @@ def printMenu():
 
 catalog = None
 
+def initCatalog():
+    """
+    Inicializa el catalogo 
+    """
+    return controller.initCatalog()
 """
 Menu principal
 """
