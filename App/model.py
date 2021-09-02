@@ -60,10 +60,24 @@ def addVideo(catalog, videos):
     # Cada autor, se crea en la lista de libros del catalogo, y se
     # crea un libro en la lista de dicho autor (apuntador al libro)
     
-    for cat in categorias:##CUELLAAAAARRR 
-        addBookAuthor(catalog, author.strip(), book)
+    for cat in categorias:
+        addBookAuthor(catalog, cat.strip(), videos)
+
+def addCategorias(catalog, videos):
+    # Se adiciona el libro a la lista de libros
+    lt.addLast(catalog['videos'], videos)
+    # Se obtienen los autores del libro
+    categorias = videos['categorias'].split(",")
+    # Cada autor, se crea en la lista de libros del catalogo, y se
+    # crea un libro en la lista de dicho autor (apuntador al libro)
+    
+    for cat in categorias:
+        addBookAuthor(catalog, cat.strip(), videos)
+
 
 # Funciones para creacion de datos
+
+
 
 # Funciones de consulta
 
