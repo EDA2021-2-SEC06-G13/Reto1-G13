@@ -61,8 +61,24 @@ while True:
         print("Cargando información de los archivos ....")
 
     elif int(inputs[0]) == 2:
+        input("Ingrese el rango de años: ")
         pass
-
+    elif int(inputs[0]) == 3:
+        input("Ingrese el rango de años: ")
+        pass
+    elif int(inputs[0]) == 4:
+        input("Sobre que tecnica desea clasificar al artista:  ")
+        pass
+    elif int(inputs[0]) == 5:
+        input("Sobre que nacionalidad desea clasificar las obras:  ")
+        pass
+    elif int(inputs[0]) == 6:
+        input("Ingrese el departamento origen: ")
+        input("Ingrese el departamento destino: ")
+        pass
+    elif int(inputs[0]) == 7:
+        input("Que exposicion desea proponer:  ")
+        pass
     else:
         sys.exit(0)
 sys.exit(0)
