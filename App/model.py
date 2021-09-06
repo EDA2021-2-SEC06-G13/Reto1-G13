@@ -41,38 +41,28 @@ def newCatalog():
     Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
     los mismos.
     """
-    catalog = {'videos': None,
-               'categorias': None}
+    catalog = {'artistas': None,
+               'obras': None}
 
-    catalog['videos'] = lt.newList()
-    catalog['categorias'] = lt.newList('SINGLE_LINKED',
-                                    cmpfunction=compareauthors)
+    catalog['artistas'] = lt.newList()
+    catalog['obras'] = lt.newList('SINGLE_LINKED')
+                                
     
 
     return catalog
 
 # Funciones para agregar informacion al catalogo
-def addVideo(catalog, videos):
+def addVideo(catalog, artistas):
     # Se adiciona el libro a la lista de libros
-    lt.addLast(catalog['videos'], videos)
-    # Se obtienen los autores del libro
-    categorias = videos['categorias'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
+    lt.addLast(catalog['artistas'], artistas)
     
-    for cat in categorias:
-        addCategorias(catalog, cat.strip(), videos)
+    
 
-def addCategorias(catalog, videos):
+def addObras(catalog, obras):
     # Se adiciona el libro a la lista de libros
-    lt.addLast(catalog['videos'], videos)
-    # Se obtienen los autores del libro
-    categorias = videos['categorias'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
+    lt.addLast(catalog['obras'], obras)
     
-    for cat in categorias:
-        addBookAuthor(catalog, cat.strip(), videos)
+    
 
 
 # Funciones para creacion de datos

@@ -37,42 +37,32 @@ def initCatalog():
     catalog = model.newCatalog()
     return catalog
 
-def initCatalog():
-    catalog = model.newCatalog()
-    return catalog
+
 
 # Funciones para la carga de datos
 def loadData(catalog):
-    loadVideos(catalog)
-    loadCategorias(catalog)
+    loadArtistas(catalog)
+    loadObras(catalog)
     
 
 
-def loadVideos(catalog):
-    booksfile = cf.data_dir + 'GoodRead/Artists-small.csv'
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
-    for book in input_file:
-        model.addVideo(catalog, book)
+def loadArtistas(catalog):
+    artistasfile = cf.data_dir + 'Artists-small.csv'
+    input_file = csv.DictReader(open(artistasfile, encoding='utf-8'))
+    for artista in input_file:
+        model.addVideo(catalog, artista)
 
-def loadCategorias(catalog):
+def loadObras(catalog):
 
-    booksfile = cf.data_dir + 'GoodRead/Artworks-small.csv'
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
-    for book in input_file:
-        model.addCategorias(catalog, book)
+    artistasfile = cf.data_dir + 'Artworks-small.csv'
+    input_file = csv.DictReader(open(artistasfile, encoding='utf-8'))
+    for obras in input_file:
+        model.addCategorias(catalog, obras)
 
 
 
 # Funciones de ordenamiento
 
-def sortBooks(catalog):
-    model.sortBooks(catalog)
     
 # Funciones de consulta sobre el catálogo
 
-def getBooksByAuthor(catalog, authorname):
-    """
-    Retrona los libros de un autor
-    """
-    author = model.getBooksByAuthor(catalog, authorname)
-    return author
