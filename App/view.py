@@ -59,9 +59,20 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog=controller.initCatalog()
+        controller.loadData(catalog)
+
+
+
 
     elif int(inputs[0]) == 2:
-        input("Ingrese el rango de años: ")
+        anho_inicial=input("Ingrese el año inicial: ")
+        anho_final=input("Ingrese el año final: ")
+        r=controller.requerimiento_1(anho_inicial,anho_final,catalog)
+        for i in range(1,lt.size(r)):
+            res=lt.getElement(r,i)
+            print(res)
+        
         pass
     elif int(inputs[0]) == 3:
         input("Ingrese el rango de años: ")

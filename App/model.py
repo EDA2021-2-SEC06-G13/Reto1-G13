@@ -52,7 +52,7 @@ def newCatalog():
     return catalog
 
 # Funciones para agregar informacion al catalogo
-def addVideo(catalog, artistas):
+def addArtist(catalog, artistas):
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['artistas'], artistas)
     
@@ -61,16 +61,42 @@ def addVideo(catalog, artistas):
 def addObras(catalog, obras):
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['obras'], obras)
-    
-    
-
-
+ 
 # Funciones para creacion de datos
-
-
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+
+def cmpfunction(uno,dos):
+    if int(uno["BeginDate"])> int(dos["BeginDate"]):
+        r=True
+    else:
+        r=False
+    return r
+
+#Como curador del museo quiero listar cronológicamente los artistas que nacieron en un rango de años.
+def artistasCronologicamente(anho_inicio, anho_final,catalog):
+    ordenar=sa.sort(catalog["artistas"],cmpfunction)
+    lista=lt.newList("ARAY_LIST")
+    for i in range(1,lt.size(lista)):
+        anho=lt.getElement(catalog["artistas"],i)
+        print(anho)
+        if anho ["BeginDate"]>= anho_inicio and anho["BeginDate"]<=anho_final:
+            lt.addLast(lista,anho)
+    return lista
+
+
+
+
+
+
+
+
+#Como curador del museo quiero listar cronológicamente las obras adquiridas por el museo en un rango de fechas.
+
+
+
+#Como investigador del museo quiero clasificar las obras de un artista de acuerdo a la técnica (medios) utilizada para su creación.
