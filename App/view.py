@@ -58,6 +58,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        tipo_lista=input("Ingrese el tipo de lista que quiere utilizar: ")
         print("Cargando información de los archivos ....")
         catalog=controller.initCatalog()
         controller.loadData(catalog)
@@ -66,6 +67,7 @@ while True:
 
 
     elif int(inputs[0]) == 2:
+        tipo_sort=("Ingrese el tipo de sort que desea utilizar: ")
         anho_inicial=input("Ingrese el año inicial: ")
         anho_final=input("Ingrese el año final: ")
         r=controller.requerimiento_1(anho_inicial,anho_final,catalog)
