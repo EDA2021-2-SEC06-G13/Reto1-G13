@@ -50,10 +50,12 @@ def newCatalog():
                'obras': None}
 
     catalog['artistas'] = lt.newList()
+    catalog["obras"] = lt.newList()
+    tipo_lista=lt.newList()
     if tipo_lista=="ARRAY_LIST":
         catalog['obras'] = lt.newList('ARRAY_LIST')
-    if tipo_lista=="LINKED_LIST"
-    catalog['obras'] = lt.newList('SINGLE_LINKED')
+    if tipo_lista=="LINKED_LIST":
+        catalog['obras'] = lt.newList('SINGLE_LINKED')
                                 
     
 
@@ -77,6 +79,7 @@ def addObras(catalog, obras):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+"""""
 
 def cmpfunction(uno,dos):
     if int(uno["BeginDate"])> int(dos["BeginDate"]):
@@ -101,7 +104,7 @@ def artistasCronologicamente(anho_inicio, anho_final,catalog,tipo_sort):
             lista=lt.newList("ARAY_LIST")
 
     for i in range(1,lt.size(lista)):
-        anho=lt.getElement(ordenar["artistas"],i):
+        anho=lt.getElement(ordenar["artistas"],i)
         if anho ["BeginDate"]>= anho_inicio and anho["BeginDate"]<=anho_final:
             lt.addLast(lista,anho)
     return lista
@@ -129,8 +132,8 @@ def adquisicionCronologicamente(fecha_inicial,fecha_final,catalog):
         return lista
 
 def tiempo (catalog, tamaño,tipo_sort):
-    sublist=lt.subList(catalog["obras"],1,tamaño):
-    inicio=time.()
+    sublist=lt.subList(catalog["obras"],1,tamaño)
+    inicio=time()
     if tipo_sort=="Shell":
             ordenar=sa.sort(catalog["artistas"],cmpfunction)
             lista=lt.newList("ARAY_LIST")
@@ -143,7 +146,7 @@ def tiempo (catalog, tamaño,tipo_sort):
     if tipo_sort=="Quick Sorts":
             ordenar=qs.sort(catalog["artistas"],cmpfunction)
             lista=lt.newList("ARAY_LIST")
-    fin=time.()
+    fin=time()
     tiempo=(fin-inicio)*1000
     return tiempo
 
@@ -161,3 +164,4 @@ def tiempo (catalog, tamaño,tipo_sort):
 
 
 #Como investigador del museo quiero clasificar las obras de un artista de acuerdo a la técnica (medios) utilizada para su creación.
+"""

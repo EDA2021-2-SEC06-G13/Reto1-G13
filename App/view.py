@@ -44,7 +44,6 @@ def printMenu():
     print("6- Calcular el costo para transportar todas las obras de un departamento")
     print("7- Proponer una nueva exposicion en el museo")
 
-catalog = None
 
 def initCatalog():
     """
@@ -54,14 +53,20 @@ def initCatalog():
 """
 Menu principal
 """
+def loadData():
+     return controller.loadData(catalog)
+
+catalog = None
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        tipo_lista=input("Ingrese el tipo de lista que quiere utilizar: ")
+        #tipo_lista=input("Ingrese el tipo de lista que quiere utilizar: ")
         print("Cargando información de los archivos ....")
-        catalog=controller.initCatalog()
-        controller.loadData(catalog)
+        catalog=initCatalog()
+        loadData()
+        print('Artistas cargados: ' + str(lt.size(catalog['artistas'])))
+        print('Obras cargadas: ' + str(lt.size(catalog['obras'])))
 
 
 
