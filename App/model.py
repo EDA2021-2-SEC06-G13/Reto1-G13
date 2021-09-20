@@ -49,16 +49,9 @@ def newCatalog():
     catalog = {'artistas': None,
                'obras': None}
 
-    catalog['artistas'] = lt.newList()
-    catalog["obras"] = lt.newList()
-    tipo_lista=lt.newList()
-    if tipo_lista=="ARRAY_LIST":
-        catalog['obras'] = lt.newList('ARRAY_LIST')
-    if tipo_lista=="LINKED_LIST":
-        catalog['obras'] = lt.newList('SINGLE_LINKED')
-                                
-    
-
+    catalog['artistas'] = lt.newList("ARRAY_LIST")
+    catalog["obras"] = lt.newList("ARRAY_LIST")
+                            
     return catalog
 
 # Funciones para agregar informacion al catalogo
@@ -79,7 +72,7 @@ def addObras(catalog, obras):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
-"""""
+
 
 def cmpfunction(uno,dos):
     if int(uno["BeginDate"])> int(dos["BeginDate"]):
@@ -89,48 +82,46 @@ def cmpfunction(uno,dos):
     return r
 
 #Como curador del museo quiero listar cronológicamente los artistas que nacieron en un rango de años.
-def artistasCronologicamente(anho_inicio, anho_final,catalog,tipo_sort):
-    if tipo_sort=="Shell":
-            ordenar=sa.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    if tipo_sort=="Merge":
-            ordenar=mg.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    if tipo_sort=="Insertion":
-            ordenar=ins.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    if tipo_sort=="Quick Sorts":
-            ordenar=qs.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-
-    for i in range(1,lt.size(lista)):
-        anho=lt.getElement(ordenar["artistas"],i)
-        if anho ["BeginDate"]>= anho_inicio and anho["BeginDate"]<=anho_final:
-            lt.addLast(lista,anho)
-    return lista
-
-
-
+def artistasCronologicamente(anho_inicio, anho_final,catalog):
+    ordenar=sa.sort(catalog["artistas"],cmpfunction)
+    lista_1234=lt.newList("ARRAY_LIST")
+    for i in range(1,lt.size(ordenar)+1):
+        anho=lt.getElement(ordenar,i)
+        if int(anho["BeginDate"])>= int(anho_inicio) and int(anho["BeginDate"])<=int(anho_final):
+            lt.addLast(lista_1234,anho)
+    return lista_1234
 
 def cmpArtWorkByDateAcquired(uno,dos):
-    dato1=date(uno["DateAcquired"])
-    dato2=date(dos["DateAcquired"])
+    dato1=int(uno["DateAcquired"].replace("-",""))
+    dato2=int(dos["DateAcquired"].replace("-",""))
 
-    if dato1< dato2:
+    if dato1> dato2:
          r=True
     else:
         r=False
     return r
-
 def adquisicionCronologicamente(fecha_inicial,fecha_final,catalog):
         ordenar=sa.sort(catalog["obras"],cmpArtWorkByDateAcquired)
         lista=lt.newList("ARAY_LIST")
-        for i in range(1,lt.size(lista)):
-            anho=lt.getElement(ordenar["artistas"],i)    
-            if anho ["DateAcquired"]>= fecha_inicial and anho["DateAcquired"]<=fecha_final:
+        for i in range(1,lt.size(ordenar)+1):
+            anho=lt.getElement(ordenar,i)    
+            if int(anho["DateAcquired"])>= int(fecha_inicial) and int(anho["DateAcquired"])<=int(fecha_final):
                 lt.addLast(lista,anho)
         return lista
 
+def clasificarobras(nombreArtista,catalog):
+    lista=lt.newList("SINGLE_LINKED")
+    lista_artista=lt.newList("SINGLE_LINKED")
+    for i in range(1,lt.size(catalog)):
+        nombre=lt.getElement(catalog["artistas"])
+        if  str(nombre ["DisplayName"])==str(nombreArtista):
+            lt.addLast(lista,nombre)
+    for i in range(0,lt.size(lista_artista)):
+        tecnica=lt.getElement(catalog["obras"])
+        r=tecnica ["Medium"]
+        lt.addLast(lista_artista,r)
+
+"""""
 def tiempo (catalog, tamaño,tipo_sort):
     sublist=lt.subList(catalog["obras"],1,tamaño)
     inicio=time()
