@@ -57,13 +57,13 @@ def newCatalog():
 
 # Funciones para agregar informacion al catalogo
 def addArtist(catalog, artistas):
-    # Se adiciona el libro a la lista de libros
+   
     lt.addLast(catalog['artistas'], artistas)
     
     
 
 def addObras(catalog, obras):
-    # Se adiciona el libro a la lista de libros
+    
     lt.addLast(catalog['obras'], obras)
  
 # Funciones para creacion de datos
@@ -121,6 +121,55 @@ def clasificarobras(nombreArtista,catalog):
         tecnica=lt.getElement(catalog["obras"])
         r=tecnica ["Medium"]
         lt.addLast(lista_artista,r)
+
+def clasificarObrasNacionalidad(catalog, obra):
+    lista=lt.newList('ARRAY_LIST',
+                                    cmpfunction=comparepaises)
+    i =1
+    while i <= lt.size(catalog["obras"]):
+        obra = lt.getElement(catalog["obras"], i)
+        ids = obra["ConstituentID"]
+        ids = ids.replace("[", "").replace("]","").replace(" ", "").split(",")
+        for id in ids:
+            j = 1
+            encontre_artista=False
+            while j<= lt.size(catalog["artistas"]) and not encontre_artista:
+                artista = lt.getElement(catalog["artistas"], j)
+                iden= artista["ConstituentID"]
+                if id == iden:
+                    encontre_artista=True
+                    nacionalidad = artista["Nationality"]
+                    if nacionalidad == "":
+                        nacionalidad = "Unknown"
+                    if not lt.isPresent(lista, nacionalidad):
+
+                        lista_2 = lt.newList()
+                        lt.addLast(lista_2, nacionalidad)
+                        lt.addLast(lista_2, 1)
+                        lt.addLast(lista, lista_2)
+                    o=1
+                    while o<= lt.size(lista):
+                        pais= lt.getElement(lista,o)
+                        if lt.getElement(pais,1)==nacionalidad:
+                            cantidad=lt.getElement(pais,2)
+                            lt.changeInfo(pais,2,cantidad+1)
+                        o+=1
+                    
+                    lt.addLast(lista, nacionalidad)
+                
+                j+=1
+        i+=1
+    sorted_list = sa.sort(lista, comparepais)
+    return sorted_list
+def comparepais(pais1, pais2):
+    # TODO completar modificaciones para el laboratorio 4
+    return (float(lt.getElement(pais1,2)) < float(lt.getElement(pais2,2)))
+def comparepaises(pais1, pais2):
+    if (lt.getElement(pais1, 1) ==pais2):
+        return 0
+    return -1
+        
+
 
 """""
 def tiempo (catalog, tamaño,tipo_sort):
