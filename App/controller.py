@@ -63,12 +63,12 @@ def requerimiento_1(anho_inicial,anho_final,catalog):
     return model.artistasCronologicamente(anho_inicial,anho_final,catalog)
 
 def requerimiento_2(fecha_inicial,fecha_final,catalog):
-    return model.artistasCronologicamente(fecha_inicial,fecha_final,catalog)
-
+    return model.adquisicionCronologicamente(fecha_inicial,fecha_final,catalog)
+""""
 def requerimiento_3(nombreArtista,catalog):
     return model.clasificarobras(nombreArtista,catalog)
 
-
+"""
 
 # Funciones de ordenamiento
 

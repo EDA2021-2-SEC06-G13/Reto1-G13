@@ -25,6 +25,7 @@
  """
 
 
+from os import replace
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -92,11 +93,10 @@ def artistasCronologicamente(anho_inicio, anho_final,catalog):
     return lista_1234
 
 def cmpArtWorkByDateAcquired(uno,dos):
-    dato1=int(uno["DateAcquired"].replace("-",""))
-    dato2=int(dos["DateAcquired"].replace("-",""))
-
-    if dato1> dato2:
-         r=True
+    x=str(uno["DateAcquired"])
+    y=str(dos["DateAcquired"])
+    if x> y:
+        r=True
     else:
         r=False
     return r
@@ -104,8 +104,9 @@ def adquisicionCronologicamente(fecha_inicial,fecha_final,catalog):
         ordenar=sa.sort(catalog["obras"],cmpArtWorkByDateAcquired)
         lista=lt.newList("ARAY_LIST")
         for i in range(1,lt.size(ordenar)+1):
-            anho=lt.getElement(ordenar,i)    
-            if int(anho["DateAcquired"])>= int(fecha_inicial) and int(anho["DateAcquired"])<=int(fecha_final):
+            anho=lt.getElement(ordenar,i)
+            x=str((anho["DateAcquired"]))
+            if x>=(fecha_inicial) and x<=(fecha_final):
                 lt.addLast(lista,anho)
         return lista
 

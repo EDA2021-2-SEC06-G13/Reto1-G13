@@ -87,9 +87,20 @@ while True:
         fecha_final=input("Ingrese la fecha final: ")
         r=controller.requerimiento_2(fecha_inicial,fecha_final,catalog)
         print("Se encontraron "+str(lt.size(r))+" obras, desde la fecha "+str(fecha_inicial)+" hasta "+str(fecha_final))
-        print("Se encontraron "+str(lt.size(r))+" obras adquiridas por compra.")
-        print("Las primeras y ultimas 3 obras en el rango son...")
-    
+        con=0
+        for i in range(1,lt.size(r)):
+            comprar=lt.getElement(r,i)
+            if  str(comprar["CreditLine"])==str("Purchase"):
+                con+=1
+        print("Se encontraron "+str(con)+" obras adquiridas por compra.")
+        print("Las primeras tres obras en el rango son...")
+        for i in range(1,4):
+            valor=lt.getElement(r,i)
+            print(valor)
+        print("Las ultimas tres obras en el rango son...")
+        for j in range(lt.size(r)-2,lt.size(r)+1):
+            ultimas=lt.getElement(r,j)
+            print(ultimas)
 
     elif int(inputs[0]) == 4:
         nombreArtista=input("Ingrese el nombre del artista al que quiere analizar: ")
