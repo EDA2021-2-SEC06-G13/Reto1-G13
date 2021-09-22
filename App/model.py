@@ -71,16 +71,34 @@ def addObras(catalog, obras):
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-
-# Funciones de ordenamiento
-
-
 def cmpfunction(uno,dos):
     if int(uno["BeginDate"])> int(dos["BeginDate"]):
         r=True
     else:
         r=False
     return r
+def cmpArtWorkByDateAcquired(uno,dos):
+    x=str(uno["DateAcquired"])
+    y=str(dos["DateAcquired"])
+    if x> y:
+        r=True
+    else:
+        r=False
+    return r
+def compareobras(obra1,obra2):
+    if (lt.getElement(obra2, 1) ==obra1):
+        return 0
+    return -1
+def comparepais(pais1, pais2):
+    return (lt.getElement(pais1,2) >lt.getElement(pais2,2))
+def comparepaises(pais1, pais2):
+    if (lt.getElement(pais2, 1) ==pais1):
+        return 0
+    return -1
+
+# Funciones de ordenamiento
+
+
 
 #Como curador del museo quiero listar cronológicamente los artistas que nacieron en un rango de años.
 def artistasCronologicamente(anho_inicio, anho_final,catalog):
@@ -92,14 +110,7 @@ def artistasCronologicamente(anho_inicio, anho_final,catalog):
             lt.addLast(lista_1234,anho)
     return lista_1234
 
-def cmpArtWorkByDateAcquired(uno,dos):
-    x=str(uno["DateAcquired"])
-    y=str(dos["DateAcquired"])
-    if x> y:
-        r=True
-    else:
-        r=False
-    return r
+
 def adquisicionCronologicamente(fecha_inicial,fecha_final,catalog):
         ordenar=sa.sort(catalog["obras"],cmpArtWorkByDateAcquired)
         lista=lt.newList("ARAY_LIST")
@@ -111,7 +122,40 @@ def adquisicionCronologicamente(fecha_inicial,fecha_final,catalog):
         return lista
 
 def clasificarobras(nombreArtista,catalog):
-    lista=lt.newList("SINGLE_LINKED")
+    lista=lt.newList('ARRAY_LIST',
+                                    cmpfunction=compareobras)
+    
+    i =1
+    while i <= lt.size(catalog["artistas"]):
+        artista = lt.getElement(catalog["artistas"], i)
+        if nombreArtista==artista["DisplayName"]:
+            ids = artista["ConstituentID"]
+            j = 1
+            
+            while i <= lt.size(catalog["obras"]):
+                obra = lt.getElement(catalog["obras"], i)
+                ids = obra["ConstituentID"]
+                ids = ids.replace("[", "").replace("]","").replace(" ", "").split(",")
+                for id in ids:
+                    if id == ids:
+                        tecnica = obra["Medium"]
+                        if lt.isPresent(lista, tecnica)==0:
+
+                            lista_2 = lt.newList()
+                            lt.addLast(lista_2, tecnica)
+                            lt.addLast(lista_2, 1)
+                            lt.addLast(lista, lista_2)
+                    
+                        else:
+                            tecnicas= lt.getElement(lista,lt.isPresent(lista,tecnica))
+                            cantidad=lt.getElement(tecnicas,2)
+                            lt.changeInfo(tecnicas,2,cantidad+1)               
+                j+=1
+        i+=1
+    sorted_list = sa.sort(lista, comparepais)
+    return sorted_list
+    
+'''    lista=lt.newList("SINGLE_LINKED")
     lista_artista=lt.newList("SINGLE_LINKED")
     for i in range(1,lt.size(catalog)):
         nombre=lt.getElement(catalog["artistas"])
@@ -120,54 +164,47 @@ def clasificarobras(nombreArtista,catalog):
     for i in range(0,lt.size(lista_artista)):
         tecnica=lt.getElement(catalog["obras"])
         r=tecnica ["Medium"]
-        lt.addLast(lista_artista,r)
+        lt.addLast(lista_artista,r)'''
 
-def clasificarObrasNacionalidad(catalog, obra):
+def clasificarObrasNacionalidad(catalog):
     lista=lt.newList('ARRAY_LIST',
                                     cmpfunction=comparepaises)
+    
     i =1
     while i <= lt.size(catalog["obras"]):
         obra = lt.getElement(catalog["obras"], i)
         ids = obra["ConstituentID"]
         ids = ids.replace("[", "").replace("]","").replace(" ", "").split(",")
+        
         for id in ids:
             j = 1
             encontre_artista=False
+            
             while j<= lt.size(catalog["artistas"]) and not encontre_artista:
                 artista = lt.getElement(catalog["artistas"], j)
                 iden= artista["ConstituentID"]
+                
                 if id == iden:
                     encontre_artista=True
                     nacionalidad = artista["Nationality"]
                     if nacionalidad == "":
                         nacionalidad = "Unknown"
-                    if not lt.isPresent(lista, nacionalidad):
+                    if lt.isPresent(lista, nacionalidad)==0:
 
                         lista_2 = lt.newList()
                         lt.addLast(lista_2, nacionalidad)
                         lt.addLast(lista_2, 1)
                         lt.addLast(lista, lista_2)
-                    o=1
-                    while o<= lt.size(lista):
-                        pais= lt.getElement(lista,o)
-                        if lt.getElement(pais,1)==nacionalidad:
-                            cantidad=lt.getElement(pais,2)
-                            lt.changeInfo(pais,2,cantidad+1)
-                        o+=1
                     
-                    lt.addLast(lista, nacionalidad)
-                
+                    else:
+                        pais= lt.getElement(lista,lt.isPresent(lista,nacionalidad))
+                        cantidad=lt.getElement(pais,2)
+                        lt.changeInfo(pais,2,cantidad+1)               
                 j+=1
         i+=1
     sorted_list = sa.sort(lista, comparepais)
     return sorted_list
-def comparepais(pais1, pais2):
-    # TODO completar modificaciones para el laboratorio 4
-    return (float(lt.getElement(pais1,2)) < float(lt.getElement(pais2,2)))
-def comparepaises(pais1, pais2):
-    if (lt.getElement(pais1, 1) ==pais2):
-        return 0
-    return -1
+
         
 
 

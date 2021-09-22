@@ -104,15 +104,29 @@ while True:
 
     elif int(inputs[0]) == 4:
         nombreArtista=input("Ingrese el nombre del artista al que quiere analizar: ")
-        input("Sobre que tecnica desea clasificar al artista:  ")
+        r=controller.requerimiento_3(nombreArtista, catalog)
+        for i in range(1,4):
+            valor=lt.getElement(r,i)
+            print(valor)
+        
         pass
     elif int(inputs[0]) == 5:
-        input("Sobre que nacionalidad desea clasificar las obras:  ")
+        
+        r=controller.requerimiento_4(catalog)
+        for i in range(1,10):
+            valor=lt.getElement(r,i)
+            nacionalidad=lt.getElement(valor, 1)
+            cantidad=lt.getElement(valor,2)
+            print(nacionalidad,cantidad)
+        for mayor in range(1,4):
+            val=lt.getElement(r,mayor)
+            print(val)
+
+        
+
         pass
     elif int(inputs[0]) == 6:
-        input("Ingrese el departamento origen: ")
-        input("Ingrese el departamento destino: ")
-        pass
+        input("")
     elif int(inputs[0]) == 7:
         input("Que exposicion desea proponer:  ")
         pass
