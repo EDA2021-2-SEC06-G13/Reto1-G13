@@ -129,15 +129,15 @@ def clasificarobras(nombreArtista,catalog):
     while i <= lt.size(catalog["artistas"]):
         artista = lt.getElement(catalog["artistas"], i)
         if nombreArtista==artista["DisplayName"]:
-            ids = artista["ConstituentID"]
-            j = 1
+            iden = artista["ConstituentID"]
             
-            while i <= lt.size(catalog["obras"]):
+            j = 1   
+            while j <= lt.size(catalog["obras"]):
                 obra = lt.getElement(catalog["obras"], i)
                 ids = obra["ConstituentID"]
                 ids = ids.replace("[", "").replace("]","").replace(" ", "").split(",")
                 for id in ids:
-                    if id == ids:
+                    if id == iden:
                         tecnica = obra["Medium"]
                         if lt.isPresent(lista, tecnica)==0:
 
@@ -153,7 +153,7 @@ def clasificarobras(nombreArtista,catalog):
                 j+=1
         i+=1
     sorted_list = sa.sort(lista, comparepais)
-    return sorted_list
+    return lista
     
 '''    lista=lt.newList("SINGLE_LINKED")
     lista_artista=lt.newList("SINGLE_LINKED")
