@@ -25,16 +25,13 @@
  """
 
 
+from DISClib.DataStructures.arraylist import addLast
 from os import replace
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
-from DISClib.Algorithms.Sorting import mergesort as mg
-from DISClib.Algorithms.Sorting import quicksort as qs
-from DISClib.Algorithms.Sorting import insertionsort as ins
 assert cf
-from datetime import date
-import time
+
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
@@ -211,38 +208,65 @@ def clasificarObrasNacionalidad(catalog):
     return sorted_list
 
 
-"""""
-def tiempo (catalog, tamaño,tipo_sort):
-    sublist=lt.subList(catalog["obras"],1,tamaño)
-    inicio=time()
-    if tipo_sort=="Shell":
-            ordenar=sa.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    if tipo_sort=="Merge":
-            ordenar=mg.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    if tipo_sort=="Insertion":
-            ordenar=ins.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    if tipo_sort=="Quick Sorts":
-            ordenar=qs.sort(catalog["artistas"],cmpfunction)
-            lista=lt.newList("ARAY_LIST")
-    fin=time()
-    tiempo=(fin-inicio)*1000
-    return tiempo
+def transportar_obras(catalog,departamento):
+    ordenar=sa.sort(catalog["obras"],compareobras)
+    lista=lt.newList("ARRAY_LIST")
+    obra=lt.getElement(catalog["obras"])
+    for i in range(1,lt.size(ordenar)+1):
+        lugar=obra["Department"]
+        if lugar==departamento:
+            lt.addLast(lista, obra)
+    lista2=lt.newList()
+    for i in range(1,lt.size(lista)):
+        r=calcular_costo(i)
+        lt.addLast(lista2,r)
+    return lista2
+
+def calcular_costo(obra):
+    valor={"kg":0,
+    "M2caj":0,
+    "M22caj":0,
+    "M23caj":0,
+    "M3":0,
+    "M2C":0,
+    "M3C":0}
+
+    if obra["Weight (kg)"]:
+        valor["kg"]=72*obra["Weight (kg)"]
+    if obra["Width (cm)"] and obra["Height (cm)"]:
+        valor["M22caj"]=72*(obra["Width (cm)"]/100*(obra["Height (cm)"]/100))
+    if obra["Width (cm)"] and obra["Lenght (cm)"]:
+        valor["M22caj"]=72*(obra["Width (cm)"]/100*(obra["Lenght (cm)"]/100))
+    if obra["Lenght (cm)"] and obra["Height (cm)"] and obra["Width (cm)"]:
+        valor["M3caj"]=72*(obra["Lenght (cm)"]/100*(obra["Height (cm)"]/100)*(obra["Width (cm)"]/100))
+    if obra["Lenght (cm)"] and obra["Height (cm)"]:
+        valor["M2caj"]=72*(obra["Lenght (cm)"]/100*(obra["Height (cm)"]/100))
+    if obra["Diameter (cm)"]:
+        valor["M2C"]=72*(((obra["Diameter (cm)"]/200)**2)*3.14)
+    if obra["Diameter (cm)"] and obra["Height (cm)"]:
+        valor["M3C"]=72*(((obra["Diameter (cm)"]/200)**2)*3.14*(obra["Height (cm)"]/100))
+    if obra["Diameter (cm)"] and obra["Depth (cm)"]:
+        valor["M3C"]=72*(((obra["Diameter (cm)"]/200)**2)*3.14*(obra["Depth (cm)"]/100))
+    
+    menor=0
+    for costo in valor.values():
+        if costo>menor:
+            menor=costo
+    if menor==0:
+        r=48
+    else:
+        r=menor
+    return r
+
+    
+    
+   
+   
+   
+    
+    
+   
 
 
 
 
-
-
-
-
-
-
-#Como curador del museo quiero listar cronológicamente las obras adquiridas por el museo en un rango de fechas.
-
-
-
-#Como investigador del museo quiero clasificar las obras de un artista de acuerdo a la técnica (medios) utilizada para su creación.
-"""
