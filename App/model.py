@@ -34,7 +34,7 @@ from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import insertionsort as ins
 assert cf
 from datetime import date
-from time import time
+import time
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
@@ -72,6 +72,7 @@ def addObras(catalog, obras):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpfunction(uno,dos):
+
     if int(uno["BeginDate"])> int(dos["BeginDate"]):
         r=True
     else:
@@ -129,17 +130,21 @@ def clasificarobras(nombreArtista,catalog):
     while i <= lt.size(catalog["artistas"]):
         artista = lt.getElement(catalog["artistas"], i)
         if nombreArtista==artista["DisplayName"]:
+            #print ("funciona1")
             iden = artista["ConstituentID"]
             
             j = 1   
             while j <= lt.size(catalog["obras"]):
-                obra = lt.getElement(catalog["obras"], i)
+                obra = lt.getElement(catalog["obras"], j)
                 ids = obra["ConstituentID"]
                 ids = ids.replace("[", "").replace("]","").replace(" ", "").split(",")
                 for id in ids:
+                    
                     if id == iden:
+                        #print ("funciona2")
                         tecnica = obra["Medium"]
                         if lt.isPresent(lista, tecnica)==0:
+                            #print ("funciona3")
 
                             lista_2 = lt.newList()
                             lt.addLast(lista_2, tecnica)
@@ -153,7 +158,7 @@ def clasificarobras(nombreArtista,catalog):
                 j+=1
         i+=1
     sorted_list = sa.sort(lista, comparepais)
-    return lista
+    return sorted_list
     
 '''    lista=lt.newList("SINGLE_LINKED")
     lista_artista=lt.newList("SINGLE_LINKED")
@@ -204,8 +209,6 @@ def clasificarObrasNacionalidad(catalog):
         i+=1
     sorted_list = sa.sort(lista, comparepais)
     return sorted_list
-
-        
 
 
 """""

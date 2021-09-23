@@ -25,6 +25,7 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+import time
 
 
 """
@@ -71,6 +72,7 @@ while True:
     elif int(inputs[0]) == 2:
         anho_inicial=input("Ingrese el año inicial: ")
         anho_final=input("Ingrese el año final: ")
+        inicio=time.process_time()
         r=controller.requerimiento_1(anho_inicial,anho_final,catalog)        
         print("Se encontraron "+ str(lt.size(r))+" artistas que nacieron entre los años "+str(anho_inicial)+ " y "+str(anho_final))
         print("Los primeros tres artistas en el rango son...")
@@ -81,10 +83,15 @@ while True:
         for j in range(lt.size(r)-2,lt.size(r)+1):
             ultimas=lt.getElement(r,j)
             print(ultimas)
+        fin=time.process_time()
+        tiempo=(fin-inicio)*1000
+        print("Tiempo: "+str(tiempo))
+
  
     elif int(inputs[0]) == 3:
         fecha_inicial=input("Ingrese la fecha inicial: ")
         fecha_final=input("Ingrese la fecha final: ")
+        inicio=time.process_time()
         r=controller.requerimiento_2(fecha_inicial,fecha_final,catalog)
         print("Se encontraron "+str(lt.size(r))+" obras, desde la fecha "+str(fecha_inicial)+" hasta "+str(fecha_final))
         con=0
@@ -101,17 +108,27 @@ while True:
         for j in range(lt.size(r)-2,lt.size(r)+1):
             ultimas=lt.getElement(r,j)
             print(ultimas)
+        fin=time.process_time()
+        tiempo=(fin-inicio)*1000
+        print("Tiempo: "+str(tiempo))
 
     elif int(inputs[0]) == 4:
         nombreArtista=input("Ingrese el nombre del artista al que quiere analizar: ")
+        inicio=time.process_time()
         r=controller.requerimiento_3(nombreArtista, catalog)
-        for i in range(1,4):
+        print("El total de obras del artista son: "+str(lt.size(r)))
+        for i in range(1,lt.size(r)):
             valor=lt.getElement(r,i)
-            print(valor)
-        
+            tecnica=lt.getElement(valor,1)
+            cantidad=lt.getElement(valor,2)
+        print(str(tecnica)+" CANTIDAD: "+str(cantidad))
+
+        fin=time.process_time()
+        tiempo=(fin-inicio)*1000
+        print("Tiempo: "+str(tiempo))
         pass
     elif int(inputs[0]) == 5:
-        
+        inicio=time.process_time()
         r=controller.requerimiento_4(catalog)
         for i in range(1,10):
             valor=lt.getElement(r,i)
@@ -121,12 +138,16 @@ while True:
         for mayor in range(1,4):
             val=lt.getElement(r,mayor)
             print(val)
-
-        
-
+        fin=time.process_time()
+        tiempo=(fin-inicio)*1000
+        print("Tiempo: "+str(tiempo))
         pass
     elif int(inputs[0]) == 6:
-        input("")
+        inicio=time.process_time()
+        departamento=input("Ingrese el departamento que quiere analizar: ")
+        r=controller.requerimiento_5(departamento,catalog)
+        print("Se transportaran "+str(lt.size(r))+" desde "+str(departamento))
+
     elif int(inputs[0]) == 7:
         input("Que exposicion desea proponer:  ")
         pass
