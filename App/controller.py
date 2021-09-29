@@ -76,6 +76,8 @@ def requerimiento_4(catalog):
 def requerimiento_5(catalog,departamento):
     return model.transportar_obras(catalog,departamento)
 
+def laboratorio(medio,cantidad,catalog):
+    return model.tres(medio,cantidad,catalog)
 
 
 # Funciones de ordenamiento

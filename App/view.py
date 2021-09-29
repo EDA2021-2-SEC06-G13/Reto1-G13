@@ -142,7 +142,13 @@ while True:
 
     elif int(inputs[0]) == 7:
         input("Que exposicion desea proponer:  ")
-        pass
+        
+
+    elif int(inputs[0]) == 8:
+        cantidad=input("Ingrese el numero de obras antiguas a las que quiere tener una visualización: ")
+        medio=input("Ingrese el medio por el cual quiere analizar la informacion: ")
+        r=controller.laboratorio(medio,cantidad,catalog)
+        print (r)
     else:
         sys.exit(0)
 sys.exit(0)

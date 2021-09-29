@@ -29,6 +29,8 @@ from DISClib.DataStructures.arraylist import addLast
 from os import replace
 import config as cf
 from DISClib.ADT import list as lt
+from DISClib.ADT import map as mp
+from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -44,13 +46,18 @@ def newCatalog():
     los mismos.
     """
 
+
     catalog = {'artistas': None,
                'obras': None}
 
     catalog['artistas'] = lt.newList("ARRAY_LIST")
     catalog["obras"] = lt.newList("ARRAY_LIST")
+    catalog["medios"]=mp.newMap(40,maptype='PROBING',loadfactor=0.5,comparefunction=cmpmedios)
+
                             
     return catalog
+
+
 
 # Funciones para agregar informacion al catalogo
 def addArtist(catalog, artistas):
@@ -62,12 +69,55 @@ def addArtist(catalog, artistas):
 def addObras(catalog, obras):
     
     lt.addLast(catalog['obras'], obras)
+
+    medio=obras["Medium"]
+    if not mp.contains(catalog["medios"],medio):
+        lista=lt.newList("ARRAY_LIST")
+        lt.addLast(lista,obras)
+        mp.put(catalog["medios"],medio,lista)
+    else:
+        lista=mp.get(catalog["medios"],medio)
+        lista2=me.getValue(lista)
+        lt.addLast(lista2,obras)
+        mp.put(catalog["medios"],medio,lista2)
+
+
+
+
+def tres(medio,cantidad,catalog):
+    encontrar=mp.get(catalog["medios"],medio)
+    lista=me.getValue(encontrar)
+    ordenada=sa.sort(lista,cmpArtWorkByDateAcquired)
+    if lt.size(ordenada)>=cantidad:
+        sublista=lt.subList(ordenada,1,cantidad)
+        return sublista
+    else:
+        return ordenada
+
+
+
+
+
  
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+
+
+
+def cmpmedios(country, count_entry):     
+    ctentry = me.getKey(count_entry)    
+    if (country) == (ctentry):         
+        return 0     
+    elif (country) > (ctentry):         
+        return 1     
+    else:         
+        return -1
+
+
 def cmpfunction(uno,dos):
 
     if int(uno["BeginDate"])> int(dos["BeginDate"]):
